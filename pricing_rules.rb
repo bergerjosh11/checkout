@@ -19,9 +19,9 @@ class PricingRules
     base_price = product_data[:price]
     price = base_price * quantity
 
-    if @rules[item]
-      @rules[item].each do |rule|
-        price = rule.call(quantity, price, base_price, product_data)
+    if product_data[:rules]
+      product_data[:rules].each do |rule|
+        price = Rules.get_rule(rule).call(quantity, price, base_price, product_data)
       end
     end
 
