@@ -9,12 +9,6 @@ RSpec.describe Checkout do
   let(:price_file_path) { "prices.csv" }
   let(:pricing_rules) { PricingRules.new(price_file_path) }
 
-  before do
-    pricing_rules.add_rule("GR1", &Rules.bogo_rule)
-    pricing_rules.add_rule("SR1", &Rules.three_or_more_bulk_discount_rule(4.50))
-    pricing_rules.add_rule("CF1", &Rules.bulk_discount_percentage_rule(2.0 / 3.0))
-  end
-
   let(:checkout) { Checkout.new(pricing_rules) }
 
   it "calculates the total price correctly for test case 1" do
@@ -42,3 +36,13 @@ RSpec.describe Checkout do
     expect { checkout.total }.to raise_error("No price defined for item: UNKNOWN")
   end
 end
+
+# prices.csv
+# Sample CSV content for product prices
+# ProductCode,Price,DiscountPrice,DiscountPercentage,Rules
+# GR1,3.11,,,bogo_rule
+# SR1,5.00,4.50,,three_or_more_bulk_discount_rule
+# CF1,11.23,,0.6667,bulk_discount_percentage_rule
+
+# Run the tests
+RSpec::Core::Runner.run(["spec/checkout_spec.rb"])
