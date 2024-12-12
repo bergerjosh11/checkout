@@ -21,7 +21,7 @@ module Rules
       # Percentage discount for bulk purchases
       discount_percentage = product_data[:discount_percentage]
       if quantity >= 3 && discount_percentage
-        price = (quantity * (base_price * discount_percentage)).round(2)
+        price = (quantity * base_price * (1 - discount_percentage)).round(2)
       end
       price
     end
