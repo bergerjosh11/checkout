@@ -13,21 +13,25 @@ RSpec.describe Checkout do
 
   it "calculates the total price correctly for test case 1" do
     %w[GR1 SR1 GR1 GR1 CF1].each { |item| checkout.scan(item) }
+    puts "Total for test case 1: #{checkout.total}; expected: 22.45"
     expect(checkout.total).to eq(22.45)
   end
 
   it "calculates the total price correctly for test case 2" do
     %w[GR1 GR1].each { |item| checkout.scan(item) }
+    puts "Total for test case 2: #{checkout.total}; expected: 3.11"
     expect(checkout.total).to eq(3.11)
   end
 
   it "calculates the total price correctly for test case 3" do
     %w[SR1 SR1 GR1 SR1].each { |item| checkout.scan(item) }
+    puts "Total for test case 3: #{checkout.total}; expected: 16.61"
     expect(checkout.total).to eq(16.61)
   end
 
   it "calculates the total price correctly for test case 4" do
     %w[GR1 CF1 SR1 CF1 CF1].each { |item| checkout.scan(item) }
+    puts "Total for test case 4: #{checkout.total}; expected: 30.57"
     expect(checkout.total).to eq(30.57)
   end
 
@@ -45,4 +49,4 @@ end
 # CF1,11.23,,0.6667,bulk_discount_percentage_rule
 
 # Run the tests
-RSpec::Core::Runner.run(["spec/checkout_spec.rb"])
+# RSpec::Core::Runner.run(["spec/checkout_spec.rb"])
