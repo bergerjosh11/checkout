@@ -1,27 +1,33 @@
 # Define custom rules for discounts.
 module Rules
-  def self.bogo_rule
-    lambda do |quantity, price, base_price|
+  RULES = {
+    'bogo_rule' => lambda do |quantity, price, base_price, product_data|
       # Buy one get one free
       free_items = quantity / 2
       price -= free_items * base_price
       price
-    end
-  end
+    end,
 
-  def self.three_or_more_bulk_discount_rule(discount_price)
-    lambda do |quantity, price, base_price|
+    'three_or_more_bulk_discount_rule' => lambda do |quantity, price, base_price, product_data|
       # Bulk discount for three or more items
-      price = quantity * discount_price if quantity >= 3
+      discount_price = product_data[:discount_price]
+      if quantity >= 3 && discount_price
+        price = quantity * discount_price
+      end
       price
-    end
-  end
+    end,
 
-  def self.bulk_discount_percentage_rule(percentage)
-    lambda do |quantity, price, base_price|
+    'bulk_discount_percentage_rule' => lambda do |quantity, price, base_price, product_data|
       # Percentage discount for bulk purchases
-      price = quantity * (base_price * percentage) if quantity >= 3
+      discount_percentage = product_data[:discount_percentage]
+      if quantity >= 3 && discount_percentage
+        price = quantity * (base_price * discount_percentage)
+      end
       price
     end
+  }
+
+  def self.get_rule(rule_name)
+    RULES[rule_name]
   end
 end
