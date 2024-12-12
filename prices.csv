@@ -1,4 +1,4 @@
-ProductCode,Price
-GR1,3.11
-SR1,5.00
-CF1,11.23
+ProductCode,Price,DiscountPrice,DiscountPercentage,Rules
+GR1,3.11,,,bogo_rule
+SR1,5.00,4.50,,three_or_more_bulk_discount_rule
+CF1,11.23,,0.6667,bulk_discount_percentage_rule
