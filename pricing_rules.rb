@@ -1,12 +1,13 @@
 # Defines the pricing rules for applying discount rules.
 class PricingRules
   def initialize
-    @rules = []
+    @rules = {}
   end
 
-  # Add a pricing rule.
-  def add_rule(&rule)
-    @rules << rule
+  # Add a pricing rule for a specific product.
+  def add_rule(product_code, &rule)
+    @rules[product_code] ||= []
+    @rules[product_code] << rule
   end
 
   # Apply all rules to calculate the price for a specific item and quantity.
@@ -20,8 +21,11 @@ class PricingRules
 
     price = base_price * quantity
 
-    @rules.each do |rule|
-      price = rule.call(item, quantity, price)
+    # Apply rules specific to the item, if any
+    if @rules[item]
+      @rules[item].each do |rule|
+        price = rule.call(quantity, price)
+      end
     end
 
     price
