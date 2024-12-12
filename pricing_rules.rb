@@ -44,3 +44,4 @@ class PricingRules
     end
     prices
   end
+end
